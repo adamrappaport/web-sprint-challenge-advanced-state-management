@@ -5,7 +5,7 @@ export const initialState = {
     loading: false,
     error: ""
 }
-export const reducer = (state = initialState, action) => {
+ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case (FETCH_START):
             return ({ ...state, loading: true });
