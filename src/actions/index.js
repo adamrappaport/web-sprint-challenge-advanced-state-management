@@ -30,6 +30,7 @@ export const addNewSmurf = (smurfData) => dispatch => {
 
 export const setError = (err) => {
     return({ type: FETCH_FAIL, payload: err });
-}
 
+
+}
 

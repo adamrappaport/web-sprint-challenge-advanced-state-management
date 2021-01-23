@@ -26,8 +26,7 @@ export const initialState = {
             });
         case (FETCH_FAIL):
             return ({ ...state, loading: false, error: action.payload });
-        case (FETCH_FAIL):
-            return ({ ...state, loading: false, error: action.payload });
+        
         default:
             return state;
     }

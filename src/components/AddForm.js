@@ -1,60 +1,83 @@
-import React from 'react';
+import React ,{useState} from 'react';
 import { connect } from "react-redux";
+
 
 import { addNewSmurf, setError } from "../actions/index";
 
-class AddForm extends React.Component {
-   
-        state = {
+
+const initialSmurf = {
             
-            name: "",
-            position: "",
-            nickname: "",
-            description: "",
-            id: Date.now()
-        }
+    name: "",
+    position: "",
+    nickname: "",
+    description: "",
+    id: Date.now()
+}
+
+
+
+function AddForm(props) {
+   const [smurf, setSmurf] = useState(initialSmurf)
+    
     
 
-    handleChange = (event) => {
-        this.setState({
-            ...this.state, [event.target.name]: event.target.value
+  const  handleChange = (event) => {
+        setSmurf({
+            ...smurf, [event.target.name]: event.target.value
         });
     }
 
-    handleSubmit = (event) => {
+   const  handleSubmit = (event) => {
         event.preventDefault();
-        return  this.setState({
-            name: "",
-            position: "",
-            nickname: "",
-            description: ""
-        });
+        const makeNewBlue = {
+            name: smurf.name,
+            nickname: smurf.nickname,
+            position: smurf.position,
+            description: smurf.description
+
+        }
+
+        for(let i = 0; i <smurf.length; i++){
+            if (smurf.name === props.smurf[i].name){
+                alert(' seats taken try again')
+            }
+        }
+        
+        if (smurf.name ==='' || smurf.position === '' || smurf.nickname ===''){
+            props.setError("error man")
+        } else {
+            props.addNewSmurf(makeNewBlue)
+        }
+
+
     }
+    
 
-    render() {
+ 
 
+      
         return (<div>
             <h2>New Smurf</h2>
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <div>
                     
-                    <input onChange={this.handleChange} value={this.state.name}  />
-                     <input onChange={this.handleChange} value={this.state.position}  />
-                     <input onChange={this.handleChange} value={this.state.nickname}  />
+                    <input onChange={handleChange} value={smurf.name}  />
+                     <input onChange={handleChange} value={smurf.position}  />
+                     <input onChange={handleChange} value={smurf.nickname}  />
 
                   
-                    <input onChange={this.handleChange} value={this.state.description}  />
+                    <input onChange={handleChange} value={smurf.description}  />
                 </div>
 
-                {this.props.error &&
-                    <div data-testid="error"  role="alert">Error: {this.props.error}</div>
+                {props.error &&
+                    <div data-testid="error"  role="alert">Error: {props.error}</div>
                 }
                 <button>Submit Smurf</button>
             </form>
             </div>
         );
     }
-}
+
 
 const mapStateToProps = state => {
     return {
